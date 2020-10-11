@@ -1,6 +1,6 @@
 create table log_date (
     id integer primary key autoincrement,
-    entry_date date not_null
+    entry_date date not_null type unique
 );
 
 create table food (

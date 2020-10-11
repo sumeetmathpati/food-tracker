@@ -20,6 +20,8 @@ def index():
 		database_date = datetime.strftime(dt, "%Y%m%d")
 
 		db.execute('INSERT INTO log_date (entry_date) values(?)', [database_date])
+		print('INSERTED {}'.format(database_date))
+
 		db.commit() 
 
 	cur = db.execute('''SELECT log_date.entry_date, 
@@ -28,7 +30,7 @@ def index():
 						sum(food.fat) as fat, 
 						sum(food.calories) as calories 
 						FROM log_date 
-						JOIN food_date ON food_date.log_date_id = log_date.id JOIN food ON food.id = food_date.food_id 
+						LEFT JOIN food_date ON food_date.log_date_id = log_date.id LEFT JOIN food ON food.id = food_date.food_id 
 						GROUP BY log_date.id 
 						ORDER BY log_date.entry_date desc''')
 	results = cur.fetchall()
